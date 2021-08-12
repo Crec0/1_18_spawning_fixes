@@ -5,6 +5,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.SpawnHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +16,10 @@ import org.spongepowered.asm.mixin.Shadow;
 public abstract class SpawnDebuggingMixin {
 
     @Shadow
-    private static BlockPos method_37843(World world, WorldChunk worldChunk, int i);
+    abstract BlockPos method_37843(World world, WorldChunk worldChunk, int i);
+
+    @Shadow
+    abstract void spawnEntitiesInChunk(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner);
 
     @Shadow
     public static void spawnEntitiesInChunk(SpawnGroup group, ServerWorld world, WorldChunk chunk, SpawnHelper.Checker checker, SpawnHelper.Runner runner) {
@@ -31,7 +35,6 @@ public abstract class SpawnDebuggingMixin {
                 }
             }
         }
-
     }
 }
 
