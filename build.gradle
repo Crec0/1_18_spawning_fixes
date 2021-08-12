@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.8-SNAPSHOT'
+	id 'fabric-loom' version '0.9.+'
 	id 'maven-publish'
 }
 
@@ -84,4 +84,8 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/modid.accesswidener")
 }
