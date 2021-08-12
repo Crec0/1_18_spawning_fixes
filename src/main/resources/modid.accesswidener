@@ -1,0 +1,3 @@
+accessWidener	v1	named
+Extendable	class	net/minecraft/world/SpawnHelper
+Accessible	method	net/minecraft/world/SpawnHelper	method_37843	(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;I)Lnet/minecraft/util/math/BlockPos
