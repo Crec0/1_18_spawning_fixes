@@ -53,10 +53,13 @@ public class SpawnDebuggingMixin {
             method = SPAWN_ENTITIES_IN_CHUNK,
             at = @At("LOAD"),
             index = 5
-
     )
+
     private static boolean setCondition(boolean bl){
-        return !(!blField && (chunkSectionField != WorldChunk.EMPTY_SECTION || !chunkSectionField.isEmpty()));
+        if (chunkSectionField != null){
+            return !(chunkSectionField != WorldChunk.EMPTY_SECTION && !chunkSectionField.isEmpty());
+        }
+        return true;
     }
 
     @ModifyVariable(
