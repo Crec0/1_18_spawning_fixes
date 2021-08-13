@@ -2,40 +2,70 @@ package me.crec.spawndebugging.mixin;
 
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.SpawnHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkSection;
 import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 
 @Mixin(SpawnHelper.class)
-public abstract class SpawnDebuggingMixin {
+public class SpawnDebuggingMixin {
 
-    @Shadow
-    abstract BlockPos method_37843(World world, WorldChunk worldChunk, int i);
+    @Unique
+    private static final String SPAWN_ENTITIES_IN_CHUNK = "spawnEntitiesInChunk(Lnet/minecraft/entity/SpawnGroup;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/world/chunk/WorldChunk;Lnet/minecraft/world/SpawnHelper$Checker;Lnet/minecraft/world/SpawnHelper$Runner;)V";
 
-    @Shadow
-    abstract void spawnEntitiesInChunk(SpawnGroup group, ServerWorld world, Chunk chunk, BlockPos pos, SpawnHelper.Checker checker, SpawnHelper.Runner runner);
+    @Unique
+    private static boolean blField;
 
-    @Shadow
-    public static void spawnEntitiesInChunk(SpawnGroup group, ServerWorld world, WorldChunk chunk, SpawnHelper.Checker checker, SpawnHelper.Runner runner) {
-        boolean bl = true;
+    @Unique
+    private static ChunkSection chunkSectionField;
 
-        for(int i = world.getTopY() - 16; i >= world.getBottomY(); i -= 16) {
-            ChunkSection chunkSection = chunk.getSectionArray()[chunk.getSectionIndex(i)];
-            if ((bl || chunkSection != WorldChunk.EMPTY_SECTION) && !chunkSection.isEmpty()) {
-                bl = false;
-                if (!(world.getRandom().nextFloat() > 0.24F)) {
-                    BlockPos blockPos = SpawnHelper.method_37843(world, chunk, i);
-                    spawnEntitiesInChunk(group, world, chunk, blockPos, checker, runner);
-                }
-            }
-        }
+    @Inject(
+            method = SPAWN_ENTITIES_IN_CHUNK,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/chunk/WorldChunk;getSectionIndex(I)I",
+                    shift = At.Shift.BY,
+                    by = 3
+            ),
+            locals = LocalCapture.CAPTURE_FAILSOFT
+    )
+    private static void captureVariables(SpawnGroup group, ServerWorld world, WorldChunk chunk, SpawnHelper.Checker checker, SpawnHelper.Runner runner, CallbackInfo ci, boolean bl, int i, ChunkSection chunkSection){
+        blField = bl;
+        chunkSectionField = chunkSection;
+    }
+
+    @Redirect(method = SPAWN_ENTITIES_IN_CHUNK,
+            at = @At(
+                    value = "INVOKE",
+                    target = "net/minecraft/world/chunk/ChunkSection.isEmpty()Z"
+            )
+    )
+    private static boolean falsifyIsEmpty(ChunkSection chunkSection){
+        return true;
+    }
+
+    @ModifyVariable(
+            method = SPAWN_ENTITIES_IN_CHUNK,
+            at = @At("LOAD"),
+            index = 5
+
+    )
+    private static boolean setCondition(boolean bl){
+        return !(!blField && (chunkSectionField != WorldChunk.EMPTY_SECTION || !chunkSectionField.isEmpty()));
+    }
+
+    @ModifyVariable(
+            method = SPAWN_ENTITIES_IN_CHUNK,
+            slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/WorldChunk;getSectionIndex(I)I")),
+            at = @At(value = "JUMP", ordinal = 0),
+            index = 5
+    )
+    private static boolean returnBooleanField(boolean bl){
+        return blField;
     }
 }
-
-//0543e1ef5f0344e683c1b03f2bc3e8cd
