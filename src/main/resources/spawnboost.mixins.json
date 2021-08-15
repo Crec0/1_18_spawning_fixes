@@ -1,12 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "me.crec.spawndebugging.mixin",
+  "package": "me.crec.spawnboost.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
   ],
   "client": [
-    "SpawnDebuggingMixin"
+    "SpawnBoostMixin",
+    "CommandManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

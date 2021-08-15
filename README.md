@@ -1,9 +1,2 @@
-# Fabric Example Mod
-
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+#1.18 Experimental 3 spawning fixes and optimizations
+1.18 experimental 3 brought a new mob spawning algorithm. However, its incredibly inefficient and does unnecessary checks which causes massive lag. This mod tries to optimize the code and implement new spawning algorithm.

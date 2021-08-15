@@ -1,29 +1,25 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "spawnboost",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Spawnboost",
+  "description": "A mod to optimize and implement better spawning algorithm in 1.18 exp3",
   "authors": [
-    "Me!"
+    "Crec0"
   ],
-  "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
-  },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/spawnboost/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.crec.spawndebugging.SpawnDebugging"
+      "me.crec.spawnboost.SpawnBoost"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "spawnboost.mixins.json"
   ],
 
   "depends": {
