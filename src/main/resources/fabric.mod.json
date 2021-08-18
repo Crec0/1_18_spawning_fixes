@@ -3,7 +3,7 @@
   "id": "improved-spawning",
   "version": "${version}",
 
-  "name": "Spawnboost",
+  "name": "ImprovedSpawning",
   "description": "A mod to optimize and implement better spawning algorithm for spawning changes introduced in 1.18 exp3",
   "authors": [
     "Crec0"
