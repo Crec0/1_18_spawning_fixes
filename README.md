@@ -1,7 +1,6 @@
 # 1.18 Experimental 3 spawning fixes and optimizations
 ## Features
-added command `improvedSpawning` to switch between different algorithms 
-Four different rules are availabe to be choosen from
+added command `improvedSpawning` to switch between different algorithms. Four different rules are availabe to be choosen from
 ### vanilla
 default vanilla spawning algorithm introduced in 1.18 experimental 3
 ### vanillaEmptySubchunkOptimization
