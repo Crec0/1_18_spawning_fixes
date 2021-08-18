@@ -1,25 +1,25 @@
 {
   "schemaVersion": 1,
-  "id": "spawnboost",
+  "id": "improved-spawning",
   "version": "${version}",
 
   "name": "Spawnboost",
-  "description": "A mod to optimize and implement better spawning algorithm in 1.18 exp3",
+  "description": "A mod to optimize and implement better spawning algorithm for spawning changes introduced in 1.18 exp3",
   "authors": [
     "Crec0"
   ],
 
   "license": "CC0-1.0",
-  "icon": "assets/spawnboost/icon.png",
+  "icon": "assets/improvedSpawning/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "me.crec.spawnboost.SpawnBoost"
+      "crec.improvedSpawning.ImprovedSpawning"
     ]
   },
   "mixins": [
-    "spawnboost.mixins.json"
+    "improvedSpawning.mixins.json"
   ],
 
   "depends": {

@@ -1,7 +1,7 @@
-package me.crec.spawnboost.mixin;
+package crec.improvedSpawning.mixin;
 
 import com.mojang.brigadier.CommandDispatcher;
-import me.crec.spawnboost.SpawnBoost;
+import crec.improvedSpawning.ImprovedSpawning;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import org.spongepowered.asm.mixin.Final;
@@ -17,6 +17,6 @@ public class CommandManagerMixin {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void onRegister(CommandManager.RegistrationEnvironment environment, CallbackInfo ci){
-        SpawnBoost.registerCommands(this.dispatcher);
+        ImprovedSpawning.registerCommands(this.dispatcher);
     }
 }
